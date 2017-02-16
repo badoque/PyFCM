@@ -126,46 +126,44 @@ class BaseAPI(object):
         if dry_run:
             fcm_payload['dry_run'] = dry_run
 
+        fcm_payload['data'] = {'data': {}}
         if data_message:
             if isinstance(data_message, dict):
-                fcm_payload['data'] = data_message
+                fcm_payload['data']['data'] = data_message
             else:
                 raise InvalidDataError("Provided data_message is in the wrong format")
         if message_body:
-            fcm_payload['notification'] = {
-                'body': message_body,
-                'title': message_title,
-                'icon': message_icon
-            }
+            fcm_payload['data']['data']['message_body'] = message_body
+            fcm_payload['data']['data']['message_title'] = message_title
+            fcm_payload['data']['data']['message_icon'] = message_icon
         else:
-            fcm_payload['notification'] = {}
             if message_icon:
-                fcm_payload['notification']['icon'] = message_icon
+                fcm_payload['data']['data']['icon'] = message_icon
             if body_loc_key:
-                fcm_payload['notification']['body_loc_key'] = body_loc_key
+                fcm_payload['data']['data']['body_loc_key'] = body_loc_key
             if body_loc_args:
-                fcm_payload['notification']['body_loc_args'] = body_loc_args
+                fcm_payload['data']['data']['body_loc_args'] = body_loc_args
             if title_loc_key:
-                fcm_payload['notification']['title_loc_key'] = title_loc_key
+                fcm_payload['data']['data']['title_loc_key'] = title_loc_key
             if title_loc_args:
-                fcm_payload['notification']['title_loc_args'] = title_loc_args
+                fcm_payload['data']['data']['title_loc_args'] = title_loc_args
 
         # This is needed for iOS when we are sending only custom data messages
         if content_available and isinstance(content_available, bool):
             fcm_payload['content_available'] = content_available
 
         if click_action:
-            fcm_payload['notification']['click_action'] = click_action
+            fcm_payload['data']['data']['click_action'] = click_action
         if badge:
-            fcm_payload['notification']['badge'] = badge
+            fcm_payload['data']['data']['badge'] = badge
         if color:
-            fcm_payload['notification']['color'] = color
+            fcm_payload['data']['data']['color'] = color
         if tag:
-            fcm_payload['notification']['tag'] = tag
+            fcm_payload['data']['data']['tag'] = tag
         # only add the 'sound' key if sound is not None
         # otherwise a default sound will play -- even with empty string args.
         if sound:
-            fcm_payload['notification']['sound'] = sound
+            fcm_payload['data']['data']['sound'] = sound
 
         if extra_kwargs:
             fcm_payload.update(extra_kwargs)

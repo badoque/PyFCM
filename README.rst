@@ -3,6 +3,8 @@ PyFCM
 *****
 |version| |license| 
 
+Warning: This fork contains modifications on payload to send all information on 'data['data']' field instead of 'notification' (original). This was done to be compatible with the module ti.goosh (https://github.com/caffeinalab/ti.goosh)
+
 Python client for FCM - Firebase Cloud Messaging (Android & iOS)
 
 Firebase Cloud Messaging (FCM) is the new version of GCM. It inherits the reliable and scalable GCM infrastructure, plus new features. GCM users are strongly recommended to upgrade to FCM.
